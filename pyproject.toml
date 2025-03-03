@@ -1,0 +1,46 @@
+[project]
+name = "media-optimizer"
+version = "0.1.0"
+description = "A series of Python scripts to optimize different media files, such as pictures and videos"
+authors = [{name = "Gabriel Rodríguez", email = "contact@gabrielrf.dev"},]
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.13"
+dependencies = [
+    "questionary>=2.1.0",
+    "pillow>=11.1.0",
+    "tqdm>=4.67.1",
+    "ffmpeg-python>=0.2.0",
+    "pymediainfo>=7.0.1",
+]
+
+[dependency-groups]
+dev = [
+    "pylint-per-file-ignores>=1.4.0",
+    "types-pillow>=10.2.0.20240822",
+    "types-tqdm>=4.67.0.20241221",
+]
+
+[tool.black]
+line-length = 120
+
+[tool.pylint.'MASTER']
+load-plugins=[
+    "pylint_per_file_ignores",
+]
+max-line-length = 120
+allow-reexport-from-package = true
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = ["C0114", "C0115", "C0116"]
+per-file-ignores = [
+    "\\.pyi:invalid-name,super-init-not-called,unused-argument",
+]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+extraPaths = [
+    ".venv/Lib/site-packages",
+]
+stubPath = "src/typings"
