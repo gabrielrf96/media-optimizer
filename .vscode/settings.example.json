@@ -1,0 +1,9 @@
+{
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python",
+    "python.analysis.diagnosticMode": "workspace",
+    "editor.rulers": [
+        {
+            "column": 120
+        }
+    ]
+}
