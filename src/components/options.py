@@ -3,12 +3,12 @@ from __future__ import annotations
 import os
 from enum import Enum
 from pathlib import Path
-from typing import Any, Callable, Optional, Self, Sequence
+from typing import Any, Callable, Self, Sequence
 
 import questionary
 from questionary import Choice
 
-from src.components.files import Files
+from src.components.files import Files, GenericFile
 
 
 class MenuOption(Enum):
@@ -33,7 +33,7 @@ class MenuOption(Enum):
         cls,
         message: str,
         filter_lambda_or_options: Callable[[Self], bool] | Sequence[Self | Choice] | None = None,
-        default: Optional[Self] = None,
+        default: Self | None = None,
     ) -> Self:
         choices: list[Choice] = []
 
@@ -68,10 +68,11 @@ class MenuOption(Enum):
 
 class Resolution(int, MenuOption):
     KEEP = -1, "Keep original size"
-    R_2880P = 2880, "2880p (~5K UHD)"
-    R_2160P = 2160, "2160p (~4K UHD)"
-    R_1440P = 1440, "1440p"
-    R_1080P = 1080, "1080p"
+    R_2880P = 2880, "2880p (5K UHD)"
+    R_2160P = 2160, "2160p (4K UHD)"
+    R_1440P = 1440, "1440p (QHD)"
+    R_1080P = 1080, "1080p (FHD)"
+    R_720P = 720, "720p (HD)"
 
     def __new__(cls, value: int, _: str):
         member = int.__new__(cls, value)
@@ -152,7 +153,7 @@ def ask_for_short_side_limit(resolution_options: Sequence[Resolution | Choice] |
     )
 
 
-def ask_for_overwrite_permission(files: Files) -> bool:
+def ask_for_overwrite_permission(files: Files[GenericFile]) -> bool:
     return questionary.confirm(
         f"Overwrite existing files in target directory {files.target_dir}?",
     ).unsafe_ask()

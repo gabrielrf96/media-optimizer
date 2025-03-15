@@ -6,17 +6,18 @@ changing the output quality.
 
 from __future__ import annotations
 
+import sys
 from enum import Enum, auto
 from pathlib import Path
 from typing import override
 
-import PIL
 from PIL import Image
 from tqdm import tqdm
 
-from src.components.files import File, Files, get_media_info
+from src.components.files import File, Files
 from src.components.media_optimizer import MediaOptimizer
 from src.components.options import MenuOption, Resolution, ask_for_overwrite_permission, ask_for_short_side_limit
+from src.components.stdout import cli_unprint
 
 
 class ImageFormat(str, MenuOption):
@@ -71,14 +72,18 @@ class Orientation(Enum):
 class PictureOptimizer(MediaOptimizer):
     @override
     def is_valid_file(self, path: Path) -> bool:
-        info = get_media_info(path)
+        info = self.media_info_service.get(path)
 
-        return len(info.image_tracks) > 0
+        return info is not None and len(info.image_tracks) > 0
 
     @override
-    def run(self, files: Files):
+    def create_file(self, source: Path, target: Path) -> File:
+        return File(source, target)
+
+    @override
+    def run(self, files: Files[File]):
         # Ask for output resolution limit
-        target_max_short_side = ask_for_short_side_limit()
+        short_side_limit = ask_for_short_side_limit()
 
         # Ask for output format
         output_format = ImageFormat.choose("What output format would you like to use?")
@@ -95,35 +100,38 @@ class PictureOptimizer(MediaOptimizer):
             )
 
         # Ask if existing optimized pictures should be overwritten
-        should_overwrite_existing = ask_for_overwrite_permission(files)
+        should_overwrite = ask_for_overwrite_permission(files)
 
         # Process the list of files
-        print("\nOptimizing pictures...")
+        print("\nOptimizing pictures...\n")
 
-        for file in tqdm(files):
-            try:
-                self._optimize_image(
-                    file, target_max_short_side, output_format, jpeg_quality, should_overwrite_existing
-                )
-            except PIL.UnidentifiedImageError:
-                # Skip non-image files
-                continue
+        iterator_progress_tracker = tqdm(files, file=sys.stdout, unit="pic")
+
+        for file in iterator_progress_tracker:
+            iterator_progress_tracker.write(f'Processing "{file.source.name}"')
+
+            self._optimize_image(file, short_side_limit, output_format, jpeg_quality, should_overwrite)
+
+            cli_unprint(2)
+
+        cli_unprint(2)
+        iterator_progress_tracker.display()
 
     def _optimize_image(
         self,
         file: File,
-        target_max_short_side: int,
+        short_side_limit: int,
         output_format: ImageFormat,
         jpeg_quality: int,
-        should_overwrite_existing: bool = True,
+        should_overwrite: bool = True,
     ):
-        if file.target.is_file() and not should_overwrite_existing:
+        if file.target.is_file() and not should_overwrite:
             return
 
         image = Image.open(file.source)
 
-        if target_max_short_side != Resolution.KEEP:
-            image = self._resize_image(image, target_max_short_side)
+        if short_side_limit != Resolution.KEEP:
+            image = self._resize_image(image, short_side_limit)
 
         image.save(
             file.target if output_format == ImageFormat.KEEP else file.target.with_suffix(output_format.extension),

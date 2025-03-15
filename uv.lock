@@ -12,34 +12,13 @@ wheels = [
 ]
 
 [[package]]
-name = "ffmpeg-python"
-version = "0.2.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "future" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/dd/5e/d5f9105d59c1325759d838af4e973695081fbbc97182baf73afc78dec266/ffmpeg-python-0.2.0.tar.gz", hash = "sha256:65225db34627c578ef0e11c8b1eb528bb35e024752f6f10b78c011f6f64c4127", size = 21543 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d7/0c/56be52741f75bad4dc6555991fabd2e07b432d333da82c11ad701123888a/ffmpeg_python-0.2.0-py3-none-any.whl", hash = "sha256:ac441a0404e053f8b6a1113a77c0f452f1cfc62f6344a769475ffdc0f56c23c5", size = 25024 },
-]
-
-[[package]]
-name = "future"
-version = "1.0.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/a7/b2/4140c69c6a66432916b26158687e821ba631a4c9273c474343badf84d3ba/future-1.0.0.tar.gz", hash = "sha256:bd2968309307861edae1458a4f8a4f3598c03be43b97521076aebf5d94c07b05", size = 1228490 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/da/71/ae30dadffc90b9006d77af76b393cb9dfbfc9629f339fc1574a1c52e6806/future-1.0.0-py3-none-any.whl", hash = "sha256:929292d34f5872e70396626ef385ec22355a1fae8ad29e1a734c3e43f9fbc216", size = 491326 },
-]
-
-[[package]]
 name = "media-optimizer"
-version = "0.1.0"
+version = "0.2.0"
 source = { virtual = "." }
 dependencies = [
-    { name = "ffmpeg-python" },
     { name = "pillow" },
     { name = "pymediainfo" },
+    { name = "python-ffmpeg" },
     { name = "questionary" },
     { name = "tqdm" },
 ]
@@ -53,9 +32,9 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "ffmpeg-python", specifier = ">=0.2.0" },
     { name = "pillow", specifier = ">=11.1.0" },
     { name = "pymediainfo", specifier = ">=7.0.1" },
+    { name = "python-ffmpeg", specifier = ">=2.0.12" },
     { name = "questionary", specifier = ">=2.1.0" },
     { name = "tqdm", specifier = ">=4.67.1" },
 ]
@@ -107,6 +86,18 @@ wheels = [
 ]
 
 [[package]]
+name = "pyee"
+version = "12.1.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/0a/37/8fb6e653597b2b67ef552ed49b438d5398ba3b85a9453f8ada0fd77d455c/pyee-12.1.1.tar.gz", hash = "sha256:bbc33c09e2ff827f74191e3e5bbc6be7da02f627b7ec30d86f5ce1a6fb2424a3", size = 30915 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/25/68/7e150cba9eeffdeb3c5cecdb6896d70c8edd46ce41c0491e12fb2b2256ff/pyee-12.1.1-py3-none-any.whl", hash = "sha256:18a19c650556bb6b32b406d7f017c8f513aceed1ef7ca618fb65de7bd2d347ef", size = 15527 },
+]
+
+[[package]]
 name = "pylint-per-file-ignores"
 version = "1.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -126,6 +117,19 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/02/10/a9bc1446a48d3a15940eb1af79a71978f368f27e2cc86f9ec3ec2d206a20/pymediainfo-7.0.1-py3-none-manylinux_2_27_x86_64.whl", hash = "sha256:cde98112f1ce486589b17a12e5da42085faea996224f7c67fa45b8c1dca719c6", size = 6001553 },
     { url = "https://files.pythonhosted.org/packages/ed/7f/c48f8514cb60c9ff9be81b6f383e73e66c7461ef854a1b62628e3c823f13/pymediainfo-7.0.1-py3-none-win32.whl", hash = "sha256:01bcaf82b72cefbf4b96f13b2547e1b2e0e734bab7173d7c33f7f01acc07c98b", size = 3125046 },
     { url = "https://files.pythonhosted.org/packages/e7/26/9d50c2a330541bc36c0ea7ce29eeff5b0c35c2624139660df8bcfa9ae3ce/pymediainfo-7.0.1-py3-none-win_amd64.whl", hash = "sha256:13224fa7590e198763b8baf072e704ea81d334e71aa32a469091460e243893c7", size = 3271232 },
+]
+
+[[package]]
+name = "python-ffmpeg"
+version = "2.0.12"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pyee" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/dd/4d/7ecffb341d646e016be76e36f5a42cb32f409c9ca21a57b68f067fad3fc7/python_ffmpeg-2.0.12.tar.gz", hash = "sha256:19ac80af5a064a2f53c245af1a909b2d7648ea045500d96d3bcd507b88d43dc7", size = 14126292 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7f/6d/02e817aec661defe148cb9eb0c4eca2444846305f625c2243fb9f92a9045/python_ffmpeg-2.0.12-py3-none-any.whl", hash = "sha256:d86697da8dfb39335183e336d31baf42fb217468adf5ac97fd743898240faae3", size = 14411 },
 ]
 
 [[package]]
@@ -183,6 +187,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/0d/4f/70760ecc463f3383826666837f28d6e328ff28749fea7fd250f04c861708/types_tqdm-4.67.0.20241221.tar.gz", hash = "sha256:e56046631056922385abe89aeb18af5611f471eadd7918a0ad7f34d84cd4c8cc", size = 16858 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e5/e9/9832ef6d017d12b6b4740d7c4dd4eab31867c92ab2c95331d5cb4632fb22/types_tqdm-4.67.0.20241221-py3-none-any.whl", hash = "sha256:a1f1c9cda5c2d8482d2c73957a5398bfdedda10f6bc7b3b4e812d5c910486d29", size = 24098 },
+]
+
+[[package]]
+name = "typing-extensions"
+version = "4.12.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/df/db/f35a00659bc03fec321ba8bce9420de607a1d37f8342eee1863174c69557/typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8", size = 85321 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/26/9f/ad63fc0248c5379346306f8668cda6e2e2e9c95e01216d2b8ffd9ff037d0/typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d", size = 37438 },
 ]
 
 [[package]]
