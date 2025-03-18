@@ -1,12 +1,5 @@
 """
 Entry point script that lets you choose which optimization tool you want to use.
-
-If you have manually installed the necessary dependencies (pyproject.toml) in your system, you can just run the script
-normally:
-`python media_optimizer.py`
-
-Otherwise, the recommended way to run it is by using `uv` (https://github.com/astral-sh/uv):
-`uv run media_optimizer.py`
 """
 
 import argparse
