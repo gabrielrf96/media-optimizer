@@ -31,20 +31,30 @@ RELEASE_SUFFIXES = {
 class PackedFile:
     location: Path
     destination: Path
+    skip_if_not_found: bool = False
 
 
 RELEASE_PACKED_FILES = [
+    # Media Optimizer license
     PackedFile(
         location=ROOT.joinpath("LICENSE"),
         destination=Path("LICENSE.txt"),
     ),
+    # Basic README file
     PackedFile(
         location=ROOT.joinpath("build", "release_files", "README.txt"),
         destination=Path("README.txt"),
     ),
+    # Third-party licenses
     PackedFile(
         location=Path(pymediainfo.__path__[0], "License.html"),
         destination=Path("third-party", "licenses", "MediaInfo.html"),
+        skip_if_not_found=True,
+    ),
+    PackedFile(
+        location=Path(pymediainfo.__path__[0], "LICENSE"),
+        destination=Path("third-party", "licenses", "MediaInfo.txt"),
+        skip_if_not_found=True,
     ),
 ]
 
@@ -85,7 +95,13 @@ def pack_for_release():
     zf.write(ROOT.joinpath("dist", exe_name), exe_name)
 
     for packed_file in RELEASE_PACKED_FILES:
-        zf.write(packed_file.location, packed_file.destination)
+        try:
+            zf.write(packed_file.location, packed_file.destination)
+        except FileNotFoundError as err:
+            if packed_file.skip_if_not_found:
+                continue
+            else:
+                raise err
 
     zf.close()
 
