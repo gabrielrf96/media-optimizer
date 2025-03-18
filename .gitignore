@@ -4,10 +4,13 @@
 # Python-generated files
 __pycache__/
 *.py[oc]
-build/build
+build/media_optimizer*
 dist/
 wheels/
 *.egg-info
+
+# Keep build spec files
+!build/media_optimizer*.spec
 
 # Virtual environments
 .venv

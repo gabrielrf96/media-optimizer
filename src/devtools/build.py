@@ -64,16 +64,21 @@ class BuildError(Exception):
 
 
 def build(is_for_release: bool = False):
-    PyInstaller.__main__.run([str(ROOT.joinpath("build", "build.spec"))])
+    system = platform.system()
+
+    os_spec_file = ROOT.joinpath("build", f"media_optimizer--{system.lower()}.spec")
+    default_spec_file = ROOT.joinpath("build", "media_optimizer.spec")
+    spec_file_path = os_spec_file if os_spec_file.exists() else default_spec_file
+
+    PyInstaller.__main__.run([str(spec_file_path)])
 
     if is_for_release:
-        pack_for_release()
+        __pack_for_release(system)
 
 
-def pack_for_release():
+def __pack_for_release(system: str):
     print("Packing for release...")
 
-    system = platform.system()
     suffix_data = RELEASE_SUFFIXES.get(system)
     if suffix_data is None:
         raise BuildError(f"Not prepared to build a release for the current system: {system}")
