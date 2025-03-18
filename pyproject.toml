@@ -43,6 +43,7 @@ per-file-ignores = [
 typeCheckingMode = "strict"
 extraPaths = [
     ".venv/Lib/site-packages",
+    ".venv/lib/",
 ]
 stubPath = "src/typings"
 reportMissingTypeStubs = false
