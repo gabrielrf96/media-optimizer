@@ -47,12 +47,12 @@ RELEASE_PACKED_FILES = [
     ),
     # Third-party licenses
     PackedFile(
-        location=Path(pymediainfo.__path__[0], "License.html"),
+        location=Path(pymediainfo.__path__[0], "License.html"),  # type: ignore
         destination=Path("third-party", "licenses", "MediaInfo.html"),
         skip_if_not_found=True,
     ),
     PackedFile(
-        location=Path(pymediainfo.__path__[0], "LICENSE"),
+        location=Path(pymediainfo.__path__[0], "LICENSE"),  # type: ignore
         destination=Path("third-party", "licenses", "MediaInfo.txt"),
         skip_if_not_found=True,
     ),
