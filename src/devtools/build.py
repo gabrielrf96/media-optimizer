@@ -39,8 +39,8 @@ RELEASE_PACKED_FILES = [
         destination=Path("LICENSE.txt"),
     ),
     PackedFile(
-        location=ROOT.joinpath("build", "release_files", "README.TXT"),
-        destination=Path("README.TXT"),
+        location=ROOT.joinpath("build", "release_files", "README.txt"),
+        destination=Path("README.txt"),
     ),
     PackedFile(
         location=Path(pymediainfo.__path__[0], "License.html"),
