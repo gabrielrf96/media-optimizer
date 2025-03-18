@@ -27,10 +27,6 @@ from src.components.options import MenuOption, Resolution, ask_for_overwrite_per
 from src.components.stdout import cli_unprint
 
 
-class VideoError(Exception):
-    pass
-
-
 class EncodingQuality(int, MenuOption):
     HIGHEST = 18, "Highest (CRF=18)"
     HIGH = 20, "High (CRF=20)"
