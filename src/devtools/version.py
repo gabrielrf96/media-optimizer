@@ -17,8 +17,8 @@ from src._version import __VERSION__, __VERSION_INFO__
 def valid_version(version: str) -> tuple[int, int, int]:
     if re.match(r"^[0-9]+\.[0-9]+\.[0-9]+$", version) is not None:
         return tuple(map(int, version.split(".")))  # type: ignore
-    else:
-        raise argparse.ArgumentTypeError("The version must be in the format MAJOR.MINOR.PATCH")
+
+    raise argparse.ArgumentTypeError("The version must be in the format MAJOR.MINOR.PATCH")
 
 
 def set_version(major: int, minor: int, patch: int):
