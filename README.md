@@ -1,4 +1,4 @@
-# Media Optimizer v0.2.0
+# Media Optimizer v0.3.0
 A simple **CLI tool** designed to **optimize different media files** *(pictures and videos)* through a user-friendly interface, with keyboard-navigable menus, progress bars and extensive options to tweak its behavior and output quality.
 
 **For pictures:**<br/>
