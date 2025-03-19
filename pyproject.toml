@@ -1,6 +1,6 @@
 [project]
 name = "media-optimizer"
-version = "0.2.0"
+version = "0.3.0"
 description = "A series of Python scripts to optimize different media files, such as pictures and videos"
 authors = [{name = "Gabriel Rodríguez", email = "contact@gabrielrf.dev"},]
 readme = "README.md"
