@@ -36,7 +36,7 @@ RELEASE_SUFFIXES = {
     },
 }
 
-PYTHON_VERSION = ROOT.joinpath(".python-version").read_text().strip()
+PYTHON_VERSION = ROOT.joinpath(".python-version").read_text("utf-8").strip()
 MACOS_CPYTHON_X64 = f"cpython-{PYTHON_VERSION}-macos-x86_64-none"
 MACOS_CPYTHON_ARM64 = f"cpython-{PYTHON_VERSION}-macos-aarch64-none"
 
@@ -155,8 +155,8 @@ def __pack_for_release(system: str, arch: str):
         except FileNotFoundError as err:
             if packed_file.skip_if_not_found:
                 continue
-            else:
-                raise err
+
+            raise err
 
     zf.close()
 
