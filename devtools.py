@@ -35,15 +35,15 @@ def get_arg_parser() -> argparse.ArgumentParser:
     # Version tools
     version_parser = subparsers.add_parser("version", help="version tools")
     version_parser.add_argument(
-        "-sv",
+        "-s",
         "--set-version",
         type=valid_version,
         metavar="MAJOR.MINOR.PATCH",
         help="set full version",
     )
-    version_parser.add_argument("-bv", "--bump-major", action="store_true", help="bump major version")
-    version_parser.add_argument("-bm", "--bump-minor", action="store_true", help="bump minor version")
-    version_parser.add_argument("-bp", "--bump-patch", action="store_true", help="bump patch version")
+    version_parser.add_argument("-b", "--bump-major", action="store_true", help="bump major version")
+    version_parser.add_argument("-m", "--bump-minor", action="store_true", help="bump minor version")
+    version_parser.add_argument("-p", "--bump-patch", action="store_true", help="bump patch version")
 
     # Build tools
     build_parser = subparsers.add_parser("build", help="build tools")

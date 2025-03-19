@@ -140,13 +140,13 @@ If you don't like running executables, there is also the less convenient but equ
 1. Bump the version using the project's devtools command:
     ```sh
     # Bump MAJOR version
-    uv run devtools.py version -bv  # or --bump-major
+    uv run devtools.py version -b  # or --bump-major
 
     # Bump MINOR version
-    uv run devtools.py version -bm  # or --bump-minor
+    uv run devtools.py version -m  # or --bump-minor
 
     # Bump PATCH version
-    uv run devtools.py version -bp  # or --bump-patch
+    uv run devtools.py version -p  # or --bump-patch
     ```
 
 2. Create a new git tag with the corresponding version, following the format `vX.Y.Z`, where:
