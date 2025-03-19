@@ -5,13 +5,14 @@
 # Python-generated files
 __pycache__/
 *.py[oc]
-build/media_optimizer*
+build/*
 dist/
 wheels/
 *.egg-info
 
-# Keep build spec files
-!build/media_optimizer*.spec
+# Keep build spec files and release_files folder
+!build/release_files
+!build/*.spec
 
 # Virtual environments
 .venv
