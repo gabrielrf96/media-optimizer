@@ -8,6 +8,7 @@ from typing import Any, Callable, Self, Sequence
 import questionary
 from questionary import Choice
 
+from src.components.app import is_running_in_app_path
 from src.components.files import Files, GenericFile
 
 
@@ -139,9 +140,11 @@ class Resolution(int, MenuOption):
 
 
 def ask_for_source_dir(file_type: str) -> str:
+    default = os.path.join(Path.home(), "") if is_running_in_app_path() else os.path.join(os.getcwd(), "")
+
     return questionary.path(
         f"Where are the {file_type} you want to optimize?",
-        os.path.join(Path.home(), ""),
+        default,
         only_directories=True,
     ).unsafe_ask()
 
