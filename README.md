@@ -48,7 +48,7 @@ You can find the latest version in the [releases section](https://github.com/gab
 
 The distributable version is a **portable executable**, so you can use it directly from your terminal. For convenience, you might want to put the executable in a directory that is included in your `PATH`, which will allow you to run Media Optimizer without having to navigate to the directory that contains the executable.
 
-### Building from source
+### <a name="building-from-source"></a>Building from source
 If you prefer, you can build the distributable version yourself from the source code:
 
 1. **Install** the **project manager**, `uv`: [astral-sh/uv](https://github.com/astral-sh/uv)
@@ -58,6 +58,18 @@ If you prefer, you can build the distributable version yourself from the source 
     git clone https://github.com/gabrielrf96/media-optimizer.git
     cd media-optimizer
     uv sync
+    ```
+
+    2.1. <a name="build-from-source-macos"></a>If you're on an Apple Silicon Mac, make sure `uv sync` has installed an arm64 version of Python in the virtualenv. That should be the case, but if you have an x86_64 version installed that matches the required version, uv might try to use that instead:
+    ```sh
+    file .venv/bin/python
+    # The result should be something similar to:
+    # .venv/bin/python: Mach-O 64-bit executable arm64
+
+    # If it's not, you can try re-syncing with the
+    # --managed-python flag:
+    rm -rf .venv
+    uv sync --managed-python
     ```
 
 3. **Run the build command**:
@@ -78,6 +90,8 @@ If you don't like running executables, there is also the less convenient but equ
     cd media-optimizer
     uv sync --no-dev
     ```
+
+    2.1. If you're on an Apple Silicon Mac, check out [step 2.1.](#build-from-source-macos) of the ["Building from source"](#building-from-source) section to make sure you're building an arm64 executable.
 
 3. **Run the tool**:
     ```sh
@@ -156,7 +170,9 @@ If you don't like running executables, there is also the less convenient but equ
     # Repeat for Windows, Linux, Mac OS (Intel and Apple Silicon)
     ```
 
-4. **Create a new release** and attach the zip files generated in the previous step. Include a reasonably detailed changelog in the release description.
+    3.1. When building release-ready distributables on an Apple Silicon Mac, both the x86_64 and arm64 versions should be built. If that is not happening, check out [step 2.1.](#build-from-source-macos) of the ["Building from source"](#building-from-source) section.
+
+4. **Create a new release on GitHub** and attach the zip files generated in the previous step. Include a reasonably detailed changelog in the release description.
 
 # Bug reporting and contact
 If you experience any kind of trouble while using this tool, please feel free to contact me to report any bugs or problems.

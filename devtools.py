@@ -22,7 +22,7 @@ def main():
         elif args.bump_patch:
             bump_patch_version()
     elif args.command == "build":
-        build(args.release)
+        build(args.release, args.macos)
     else:
         parser.print_help()
 
@@ -48,6 +48,7 @@ def get_arg_parser() -> argparse.ArgumentParser:
     # Build tools
     build_parser = subparsers.add_parser("build", help="build tools")
     build_parser.add_argument("-r", "--release", action="store_true", help="pack the build result for release")
+    build_parser.add_argument("--macos", action="store_true", help=argparse.SUPPRESS)
 
     return parser
 
