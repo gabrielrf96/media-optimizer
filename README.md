@@ -28,8 +28,8 @@ Python dependencies are managed by the project, so you just need to follow the i
 
 However, there are some external dependencies that you will need to install manually for your system:
 - Required only for video optimization:
-    - [**ffmpeg**](https://www.ffmpeg.org) *(>= 6.0)*
-    - **libx265**
+    - [**FFmpeg**](https://www.ffmpeg.org) *(>= 6.0)*
+    - **x265** encoder *(FFmpeg distributable might include it)*
 
 # Instructions
 
@@ -132,6 +132,9 @@ If you don't like running executables, there is also the less convenient but equ
 
 ### General guidelines
 - Changes should always be worked on in **feature branches**, and merged to master only when they are stable or prepared for a new release.
+- Commit history in feature branches should be kept when it is deemed valuable. Therefore, an effort should be made to keep commit history clean in feature branches.
+- For minor features or hotfixes, commits may be squashed if keeping the entire history does not seem valuable.
+- While a feature branch is not yet public, interactive rebase may be used to tidy up commit history before publishing the branch.
 
 ### Bumping version
 1. Bump the version using the project's devtools command:
@@ -156,12 +159,9 @@ If you don't like running executables, there is also the less convenient but equ
 ### Releasing a new version
 1. **Bump the version** by following the instructions from the previous section. Choose the correct bump type *(major, minor or patch)* depending on the nature of the changes you are introducing.
 
-2. **Merge the changes into master and push them**, making sure you squash your commits:
-    ```sh
-    git checkout master
-    git merge --squash dev-branch
-    git push
-    ```
+2. **Merge the changes into master and push them**, making sure you first update your branch with any changes that may have been developed there *(by either merging master into your branch, or rebasing onto main if your branch is not public yet)*.
+
+    If your branch is for a hotfix or minor feature, consider squashing your commits if keeping the full history does not seem valuable.
 
 3. **Build the executables** in release mode, for all supported platforms:
     ```sh
@@ -173,6 +173,23 @@ If you don't like running executables, there is also the less convenient but equ
     3.1. When building release-ready distributables on an Apple Silicon Mac, both the x86_64 and arm64 versions should be built. If that is not happening, check out [step 2.1.](#build-from-source-macos) of the ["Building from source"](#building-from-source) section.
 
 4. **Create a new release on GitHub** and attach the zip files generated in the previous step. Include a reasonably detailed changelog in the release description.
+
+# Third-party tools
+Media Optimizer relies on some third-party tools to provide its functionality.
+
+This project is possible thanks to the developers and maintainers of those tools.
+
+## Bundled third-party tools
+Distributable versions of Media Optimizer are bundled with binaries of the following third-party tools, and include a copy of their licenses for reference and attribution, complying with the legal requirements of said licenses:
+
+- [MediaInfo](https://mediaarea.net/en/MediaInfo/License)
+
+## External third-party tools
+Media Optimizer requires some external dependencies to be installed on your system in order to function properly, as stated in the "Dependencies" section:
+
+- [FFmpeg](https://www.ffmpeg.org/)
+- [x265 encoder](https://x265.com/about/) *(bundled with FFmpeg)*
+
 
 # Bug reporting and contact
 If you experience any kind of trouble while using this tool, please feel free to contact me to report any bugs or problems.
