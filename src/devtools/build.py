@@ -15,6 +15,7 @@ import pymediainfo
 
 import media_optimizer
 from src._version import __VERSION__
+from src.devtools.licenses import list_python_dependencies_licenses
 
 ROOT = Path(media_optimizer.__file__).parent
 
@@ -105,6 +106,7 @@ def build(is_for_release: bool = False, is_building_for_macos: bool = False):
     PyInstaller.__main__.run(pyinstaller_args)
 
     if is_for_release:
+        __gather_licenses()
         __pack_for_release(system, arch)
 
 
@@ -121,6 +123,10 @@ def __macos_get_build_command(python: str, is_for_release: bool):
         args.append("-r")
 
     return args
+
+
+def __gather_licenses():
+    list_python_dependencies_licenses(True)
 
 
 def __pack_for_release(system: str, arch: str):

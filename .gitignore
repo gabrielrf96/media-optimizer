@@ -10,9 +10,10 @@ dist/
 wheels/
 *.egg-info
 
-# Keep build spec files and release_files folder
+# Keep build spec files and other build files
 !build/release_files
 !build/*.spec
+!build/*.json
 
 # Virtual environments
 .venv

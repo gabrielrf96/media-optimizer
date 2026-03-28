@@ -5,6 +5,7 @@ Utility commands for Media Optimizer development.
 import argparse
 
 from src.devtools.build import build
+from src.devtools.licenses import list_python_dependencies_licenses
 from src.devtools.version import bump_major_version, bump_minor_version, bump_patch_version, set_version, valid_version
 
 
@@ -23,6 +24,9 @@ def main():
             bump_patch_version()
     elif args.command == "build":
         build(args.release, args.macos)
+    elif args.command == "licenses":
+        if args.list_python:
+            list_python_dependencies_licenses()
     else:
         parser.print_help()
 
@@ -49,6 +53,15 @@ def get_arg_parser() -> argparse.ArgumentParser:
     build_parser = subparsers.add_parser("build", help="build tools")
     build_parser.add_argument("-r", "--release", action="store_true", help="pack the build result for release")
     build_parser.add_argument("--macos", action="store_true", help=argparse.SUPPRESS)
+
+    # License tools
+    licenses_parser = subparsers.add_parser("licenses", help="license tools")
+    licenses_parser.add_argument(
+        "-p",
+        "--list-python",
+        action="store_true",
+        help="list licenses of Python dependencies",
+    )
 
     return parser
 
