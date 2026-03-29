@@ -174,6 +174,16 @@ If you don't like running executables, there is also the less convenient but equ
 
 4. **Create a new release on GitHub** and attach the zip files generated in the previous step. Include a reasonably detailed changelog in the release description.
 
+> #### Note about third-party license management
+> 
+> Building for release will generally handle third-party licenses in the bundled archive, but you need to take this into account:
+>
+> - The Python dependencies will be handled automatically, including transitive dependencies. In some cases, like Pillow, the underlying necessary image handling libraries' licenses are also handled automatically (provided the Python dependency correctly handles their own third-party licenses).
+> - For some dependencies like MediaInfo, licenses have to be handled manually. This is, of course, already done for MediaInfo itself, but new cases might appear in the future. This also applies to the Python license itself, which is also handled manually.
+> - When building on each platform, some extra system libraries and third-party dependencies might be included, and they might also differ between systems. These also need to be taken into account. This is the case for things like OpenSSL and `libffi` libraries, or the Microsoft runtime DLLs on Windows.
+>
+> Therefore, it is highly recommended that you re-check the bundled executable by extracting it and reviewing that no new unhandled third-party licensed dependencies have been introduced. If new ones have been included, and their licenses haven't been handled automatically, you will need to manually include them in the `build/release_files/` directory, and declare them as `PackedFile`s in `src/devtools/build.py` if a new file has been added.
+
 # Third-party tools
 Media Optimizer relies on some third-party tools to provide its functionality.
 
