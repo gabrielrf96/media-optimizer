@@ -18,6 +18,11 @@ from src._version import __VERSION__
 from src.devtools.licenses import list_python_dependencies_licenses
 
 ROOT = Path(media_optimizer.__file__).parent
+RELEASE_FILES_DIR = ROOT.joinpath("build", "release_files")
+ZIP_THIRD_PARTY_LICENSES_DIR = Path("third_party_licenses")
+
+AUTO_THIRD_PARTY_LICENSES_FILE = ROOT.joinpath("build", "third_party_licenses.txt")
+MANUAL_THIRD_PARTY_LICENSES_FILE = RELEASE_FILES_DIR.joinpath("third_party_lib_licenses.txt")
 
 EXE_NAME = "media_optimizer"
 
@@ -57,23 +62,23 @@ RELEASE_PACKED_FILES = [
     ),
     # Basic README file
     PackedFile(
-        location=ROOT.joinpath("build", "release_files", "README.txt"),
+        location=RELEASE_FILES_DIR.joinpath("README.txt"),
         destination=Path("README.txt"),
     ),
     # Third-party licenses
     PackedFile(
-        location=ROOT.joinpath("build", "release_files", "MediaInfo-license.html"),
-        destination=Path("third-party-licenses", "MediaInfo.html"),
+        location=RELEASE_FILES_DIR.joinpath("MediaInfo_license.html"),
+        destination=ZIP_THIRD_PARTY_LICENSES_DIR.joinpath("MediaInfo.html"),
         skip_if_not_found=False,
     ),
     PackedFile(
-        location=ROOT.joinpath("build", "release_files", "Python-license.txt"),
-        destination=Path("third-party-licenses", "Python.txt"),
+        location=RELEASE_FILES_DIR.joinpath("Python_license.txt"),
+        destination=ZIP_THIRD_PARTY_LICENSES_DIR.joinpath("Python.txt"),
         skip_if_not_found=False,
     ),
     PackedFile(
-        location=ROOT.joinpath("build", "third-party-licenses.txt"),
-        destination=Path("third-party-licenses", "THIRD-PARTY-LICENSES.txt"),
+        location=AUTO_THIRD_PARTY_LICENSES_FILE,
+        destination=ZIP_THIRD_PARTY_LICENSES_DIR.joinpath("THIRD_PARTY_LICENSES.txt"),
         skip_if_not_found=False,
     ),
 ]
@@ -133,26 +138,27 @@ def __macos_get_build_command(python: str, is_for_release: bool):
 
 
 def __gather_licenses():
-    list_python_dependencies_licenses(True)
+    list_python_dependencies_licenses(save=True)
 
-    licenses_json = open(ROOT.joinpath("build", "licenses-info.json"), encoding="utf-8")
-    licenses = json.load(licenses_json)
+    with (
+        open(ROOT.joinpath("build", "licenses_info.json"), encoding="utf-8") as licenses_json_file,
+        open(AUTO_THIRD_PARTY_LICENSES_FILE, "w", encoding="utf-8") as output_file,
+        open(MANUAL_THIRD_PARTY_LICENSES_FILE, encoding="utf-8") as manual_licenses_file,
+    ):
 
-    output_file = open(ROOT.joinpath("build", "third-party-licenses.txt"), "w", encoding="utf-8")
-    output_file.write("Media Optimizer uses the following third-party software:")
+        licenses = json.load(licenses_json_file)
 
-    for license_info in licenses:
-        output_file.write(f"\n\n\n====== {license_info["Name"]} ======\n\n{license_info["URL"]}\n\n")
-        output_file.write(license_info["LicenseText"])
+        output_file.write("Media Optimizer uses the following third-party software:")
 
-        if license_info["NoticeText"] != "UNKNOWN":
-            output_file.write(f"\n\nNOTICE\n\n{license_info["NoticeText"]}")
+        for license_info in licenses:
+            output_file.write(f"\n\n\n====== {license_info["Name"]} ======\n\n{license_info["URL"]}\n\n")
+            output_file.write(license_info["LicenseText"])
 
-    output_file.write("\n\n\n")
+            if license_info["NoticeText"] != "UNKNOWN":
+                output_file.write(f"\n\nNOTICE\n\n{license_info["NoticeText"]}")
 
-    output_file.write(
-        open(ROOT.joinpath("build", "release_files", "third-party-lib-licenses.txt"), encoding="utf-8").read()
-    )
+        output_file.write("\n\n\n")
+        output_file.write(manual_licenses_file.read())
 
 
 def __pack_for_release(system: str, arch: str):

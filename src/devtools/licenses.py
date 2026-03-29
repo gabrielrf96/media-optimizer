@@ -3,7 +3,7 @@ import sys
 
 from src.components.app import get_app_path
 
-LICENSES_INFO_FILE_NAME = "licenses-info.json"
+LICENSES_INFO_FILE_NAME = "licenses_info.json"
 LICENSES_INFO_PATH = get_app_path().joinpath("build", LICENSES_INFO_FILE_NAME)
 
 
@@ -18,6 +18,7 @@ def list_python_dependencies_licenses(save: bool = False):
     ]
 
     stdout = sys.stdout
+
     if save:
         args.append("--with-license-file")
         args.append("--with-notice-file")
@@ -25,3 +26,6 @@ def list_python_dependencies_licenses(save: bool = False):
         stdout = open(LICENSES_INFO_PATH, "w", encoding="utf-8")
 
     subprocess.run(args, check=True, stdout=stdout)
+
+    if save:
+        stdout.close()
