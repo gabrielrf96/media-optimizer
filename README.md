@@ -51,7 +51,7 @@ The distributable version is a **portable executable**, so you can use it direct
 > [!WARNING]
 > Distributable versions are experimental. If you experience any issues while using them, please report them in the [issues section](https://github.com/gabrielrf96/media-optimizer/issues).
 >
-> In that case, it also adviced that you opt for building the executable from source in your own machine, which will most likely fix those issues.
+> In that case, it's also adviced that you opt for building the executable from source in your own machine, which will most likely fix those issues.
 
 ### Building from source
 If you prefer, you can build the distributable version yourself from the source code:
