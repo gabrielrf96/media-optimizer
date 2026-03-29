@@ -4,6 +4,7 @@
 # pyright: reportUnknownVariableType=false
 # pyright: reportUnknownMemberType=false
 
+import json
 import platform
 import subprocess
 import zipfile
@@ -63,13 +64,23 @@ RELEASE_PACKED_FILES = [
     # Third-party licenses
     PackedFile(
         location=Path(pymediainfo.__path__[0], "License.html"),  # type: ignore
-        destination=Path("third-party", "licenses", "MediaInfo.html"),
-        skip_if_not_found=True,
+        destination=Path("third-party-licenses", "MediaInfo.html"),
+        skip_if_not_found=False,
     ),
     PackedFile(
         location=Path(pymediainfo.__path__[0], "LICENSE"),  # type: ignore
-        destination=Path("third-party", "licenses", "MediaInfo.txt"),
+        destination=Path("third-party-licenses", "PyMediaInfo.txt"),
         skip_if_not_found=True,
+    ),
+    PackedFile(
+        location=ROOT.joinpath("build", "release_files", "Python-license.txt"),
+        destination=Path("third-party-licenses", "Python.txt"),
+        skip_if_not_found=False,
+    ),
+    PackedFile(
+        location=ROOT.joinpath("build", "third-party-licenses.txt"),
+        destination=Path("third-party-licenses", "THIRD-PARTY-LICENSES.txt"),
+        skip_if_not_found=False,
     ),
 ]
 
@@ -92,6 +103,8 @@ def build(is_for_release: bool = False, is_building_for_macos: bool = False):
     os_spec_file = ROOT.joinpath("build", f"{EXE_NAME}--{system.lower()}.spec")
     default_spec_file = ROOT.joinpath("build", f"{EXE_NAME}.spec")
     spec_file_path = os_spec_file if os_spec_file.exists() else default_spec_file
+
+    print(f'Using spec file "{spec_file_path}"')
 
     pyinstaller_args = ["-y", str(spec_file_path)]
     if is_building_for_macos:
@@ -127,6 +140,25 @@ def __macos_get_build_command(python: str, is_for_release: bool):
 
 def __gather_licenses():
     list_python_dependencies_licenses(True)
+
+    licenses_json = open(ROOT.joinpath("build", "licenses-info.json"), encoding="utf-8")
+    licenses = json.load(licenses_json)
+
+    output_file = open(ROOT.joinpath("build", "third-party-licenses.txt"), "w", encoding="utf-8")
+    output_file.write("Media Optimizer uses the following third-party software:")
+
+    for license_info in licenses:
+        output_file.write(f"\n\n\n====== {license_info["Name"]} ======\n\n{license_info["URL"]}\n\n")
+        output_file.write(license_info["LicenseText"])
+
+        if license_info["NoticeText"] != "UNKNOWN":
+            output_file.write(f"\n\nNOTICE\n\n{license_info["NoticeText"]}")
+
+    output_file.write("\n\n\n")
+
+    output_file.write(
+        open(ROOT.joinpath("build", "release_files", "third-party-lib-licenses.txt"), encoding="utf-8").read()
+    )
 
 
 def __pack_for_release(system: str, arch: str):

@@ -20,6 +20,7 @@ def list_python_dependencies_licenses(save: bool = False):
     stdout = sys.stdout
     if save:
         args.append("--with-license-file")
+        args.append("--with-notice-file")
         args.append("--format=json")
         stdout = open(LICENSES_INFO_PATH, "w", encoding="utf-8")
 
