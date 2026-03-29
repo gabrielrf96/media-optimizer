@@ -15,7 +15,7 @@ Third-party software
 ====================
 
 Media Optimizer uses third-party libraries and tools, some of which are bundled in the
-executable in binary form. The licenses and legal notices of all those dependencies are 
+executable in binary form. The licenses and legal notices of all those dependencies are
 listed in the files located in the third-party-licenses folder that is distributed along
 with the Media Optimizer executable.
 

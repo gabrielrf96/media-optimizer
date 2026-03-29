@@ -12,7 +12,6 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import PyInstaller.__main__
-import pymediainfo
 
 import media_optimizer
 from src._version import __VERSION__
@@ -63,14 +62,9 @@ RELEASE_PACKED_FILES = [
     ),
     # Third-party licenses
     PackedFile(
-        location=Path(pymediainfo.__path__[0], "License.html"),  # type: ignore
+        location=ROOT.joinpath("build", "release_files", "MediaInfo-license.html"),
         destination=Path("third-party-licenses", "MediaInfo.html"),
         skip_if_not_found=False,
-    ),
-    PackedFile(
-        location=Path(pymediainfo.__path__[0], "LICENSE"),  # type: ignore
-        destination=Path("third-party-licenses", "PyMediaInfo.txt"),
-        skip_if_not_found=True,
     ),
     PackedFile(
         location=ROOT.joinpath("build", "release_files", "Python-license.txt"),
