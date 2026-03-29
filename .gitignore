@@ -1,13 +1,18 @@
 .vscode/**/*
 !.vscode/**/*.example.*
+.DS_Store
 
 # Python-generated files
 __pycache__/
 *.py[oc]
-build/
+build/*
 dist/
 wheels/
 *.egg-info
+
+# Keep build spec files and other build files
+!build/release_files
+!build/*.spec
 
 # Virtual environments
 .venv

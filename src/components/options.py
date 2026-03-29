@@ -8,6 +8,7 @@ from typing import Any, Callable, Self, Sequence
 import questionary
 from questionary import Choice
 
+from src.components.app import is_running_in_app_path
 from src.components.files import Files, GenericFile
 
 
@@ -39,7 +40,9 @@ class MenuOption(Enum):
 
         # Load choices
         if isinstance(filter_lambda_or_options, (list, Sequence)):
-            for option in filter_lambda_or_options:
+            for option in filter_lambda_or_options:  # type: ignore  # validated below
+                assert isinstance(option, (MenuOption, Choice))
+
                 if not cls.is_valid_option(option):
                     raise TypeError(
                         f"One or more of the provided options is not an instance of either Choice or {cls.__name__}"
@@ -139,9 +142,11 @@ class Resolution(int, MenuOption):
 
 
 def ask_for_source_dir(file_type: str) -> str:
+    default = os.path.join(Path.home(), "") if is_running_in_app_path() else os.path.join(os.getcwd(), "")
+
     return questionary.path(
         f"Where are the {file_type} you want to optimize?",
-        os.path.join(Path.home(), ""),
+        default,
         only_directories=True,
     ).unsafe_ask()
 

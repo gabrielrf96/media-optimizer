@@ -4,21 +4,29 @@ Utility commands for Media Optimizer development.
 
 import argparse
 
-from src.devhelpers import bump_major_version, bump_minor_version, bump_patch_version, set_version, valid_version
+from src.devtools.build import build
+from src.devtools.licenses import list_python_dependencies_licenses
+from src.devtools.version import bump_major_version, bump_minor_version, bump_patch_version, set_version, valid_version
 
 
 def main():
     parser = get_arg_parser()
     args = parser.parse_args()
 
-    if args.set_version is not None:
-        set_version(*args.set_version)
-    elif args.bump_major:
-        bump_major_version()
-    elif args.bump_minor:
-        bump_minor_version()
-    elif args.bump_patch:
-        bump_patch_version()
+    if args.command == "version":
+        if args.set_version is not None:
+            set_version(*args.set_version)
+        elif args.bump_major:
+            bump_major_version()
+        elif args.bump_minor:
+            bump_minor_version()
+        elif args.bump_patch:
+            bump_patch_version()
+    elif args.command == "build":
+        build(args.release, args.macos)
+    elif args.command == "licenses":
+        if args.list_python:
+            list_python_dependencies_licenses()
     else:
         parser.print_help()
 
@@ -26,16 +34,34 @@ def main():
 def get_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Utility commands for Media Optimizer development")
 
-    parser.add_argument(
-        "-sv",
+    subparsers = parser.add_subparsers(help="subcommands", dest="command")
+
+    # Version tools
+    version_parser = subparsers.add_parser("version", help="version tools")
+    version_parser.add_argument(
+        "-s",
         "--set-version",
         type=valid_version,
         metavar="MAJOR.MINOR.PATCH",
         help="set full version",
     )
-    parser.add_argument("-bv", "--bump-major", action="store_true", help="bump major version")
-    parser.add_argument("-bm", "--bump-minor", action="store_true", help="bump minor version")
-    parser.add_argument("-bp", "--bump-patch", action="store_true", help="bump patch version")
+    version_parser.add_argument("-b", "--bump-major", action="store_true", help="bump major version")
+    version_parser.add_argument("-m", "--bump-minor", action="store_true", help="bump minor version")
+    version_parser.add_argument("-p", "--bump-patch", action="store_true", help="bump patch version")
+
+    # Build tools
+    build_parser = subparsers.add_parser("build", help="build tools")
+    build_parser.add_argument("-r", "--release", action="store_true", help="pack the build result for release")
+    build_parser.add_argument("--macos", action="store_true", help=argparse.SUPPRESS)
+
+    # License tools
+    licenses_parser = subparsers.add_parser("licenses", help="license tools")
+    licenses_parser.add_argument(
+        "-p",
+        "--list-python",
+        action="store_true",
+        help="list licenses of Python dependencies",
+    )
 
     return parser
 

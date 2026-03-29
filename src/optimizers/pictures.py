@@ -130,7 +130,7 @@ class PictureOptimizer(MediaOptimizer):
 
         image = Image.open(file.source)
 
-        if short_side_limit != Resolution.KEEP:
+        if short_side_limit != Resolution.KEEP.value:
             image = self._resize_image(image, short_side_limit)
 
         image.save(
