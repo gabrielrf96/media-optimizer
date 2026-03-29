@@ -40,7 +40,9 @@ class MenuOption(Enum):
 
         # Load choices
         if isinstance(filter_lambda_or_options, (list, Sequence)):
-            for option in filter_lambda_or_options:
+            for option in filter_lambda_or_options:  # type: ignore  # validated below
+                assert isinstance(option, (MenuOption, Choice))
+
                 if not cls.is_valid_option(option):
                     raise TypeError(
                         f"One or more of the provided options is not an instance of either Choice or {cls.__name__}"
