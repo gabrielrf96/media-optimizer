@@ -48,7 +48,7 @@ You can find the latest version in the [releases section](https://github.com/gab
 
 The distributable version is a **portable executable**, so you can use it directly from your terminal. For convenience, you might want to put the executable in a directory that is included in your `PATH`, which will allow you to run Media Optimizer without having to navigate to the directory that contains the executable.
 
-### <a name="building-from-source"></a>Building from source
+### Building from source
 If you prefer, you can build the distributable version yourself from the source code:
 
 1. **Install** the **project manager**, `uv`: [astral-sh/uv](https://github.com/astral-sh/uv)
@@ -177,12 +177,10 @@ If you don't like running executables, there is also the less convenient but equ
 # Third-party tools
 Media Optimizer relies on some third-party tools to provide its functionality.
 
-This project is possible thanks to the developers and maintainers of those tools.
+This project is possible thanks to the developers and maintainers of all those dependencies.
 
 ## Bundled third-party tools
-Distributable versions of Media Optimizer are bundled with binaries of the following third-party tools, and include a copy of their licenses for reference and attribution, complying with the legal requirements of said licenses:
-
-- [MediaInfo](https://mediaarea.net/en/MediaInfo/License)
+Distributable versions of Media Optimizer are bundled with binaries of some third-party tools, and include a copy of all their licenses for reference and attribution, complying with the legal requirements of said licenses.
 
 ## External third-party tools
 Media Optimizer requires some external dependencies to be installed on your system in order to function properly, as stated in the "Dependencies" section:
@@ -192,12 +190,7 @@ Media Optimizer requires some external dependencies to be installed on your syst
 
 
 # Bug reporting and contact
-If you experience any kind of trouble while using this tool, please feel free to contact me to report any bugs or problems.
-
-You can contact me by:
-
-- Opening an <a href="https://github.com/gabrielrf96/media-optimizer/issues">**issue on GitHub**</a>
-- Sending me an e-mail at <a href="mailto:contact@gabrielrf.dev">**contact@gabrielrf.dev**</a>
+If you experience any kind of trouble while using this tool, please feel free to report any bugs or problems by [opening an **issue**](https://github.com/gabrielrf96/media-optimizer/issues).
 
 <br/>
 <br/>
