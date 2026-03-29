@@ -48,6 +48,11 @@ You can find the latest version in the [releases section](https://github.com/gab
 
 The distributable version is a **portable executable**, so you can use it directly from your terminal. For convenience, you might want to put the executable in a directory that is included in your `PATH`, which will allow you to run Media Optimizer without having to navigate to the directory that contains the executable.
 
+> [!WARNING]
+> Distributable versions are experimental. If you experience any issues while using them, please report them in the [issues section](https://github.com/gabrielrf96/media-optimizer/issues).
+>
+> In that case, it also adviced that you opt for building the executable from source in your own machine, which will most likely fix those issues.
+
 ### Building from source
 If you prefer, you can build the distributable version yourself from the source code:
 
